@@ -1,5 +1,4 @@
 /* miniprogram/pages/cityselector.wxss */
-@import "../../plugins/wxParse/wxParse.wxss";
 .SmallTitle{
     font-size: 25rpx;
     line-height: 25rpx;

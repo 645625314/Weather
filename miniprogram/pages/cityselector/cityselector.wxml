@@ -20,9 +20,6 @@
         </button>
     </view>
 </view>
-<block>
-    {{wxParseData:html.nodes}}
-</block>
 <view class="CenterContent" style="height:100%;">
     <block wx:if="{{!isProvinceSelected}}">
         <block wx:for="{{province_list}}" wx:key="*this">
