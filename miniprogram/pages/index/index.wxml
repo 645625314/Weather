@@ -1,0 +1,108 @@
+<!--index.wxml-->
+<view class="weather-container">
+	<!-- <scroll-view scroll-x scroll-with-animation enable-flex style="display:flex;width:100%;height:100%;flex-flow:row nowrap;padding:10rpx;margin:10rpx">
+		<view class="card">
+			<view wx:if="{{location!='null'}}" style="margin-top:20rpx;">
+				<view class="city">{{admin_area}}-{{parent_city}}-{{location}}</view>
+				<view class="update_time">{{update_time}}</view>
+			</view>
+			<view wx:else style="height:auto;">
+				<view class="city">正在获取位置...</view>
+				<view class="update_time">00:00:00</view>
+			</view>
+			<view class="table">
+				<view class="t1"> 
+					<image class="main_weather_icon" src="../../src/weather_icon/{{now_cond_code}}.png" mode="aspectFit" />
+				</view>
+				<view class="t1" style="width:5rpx;height:100%;margin:10rpx;">
+					<view style="background-color:white;width:2px;height:80%;"></view>
+				</view>
+				<view class="t1" style="flex-flow:column wrap;align-content:center;justify-content:center;"> 
+					<view style="justify-content:center;display:flex;flex-flow:row nowrap;height:140rpx;">
+						<text class="main_weather_text" style="font-family:'Consolas';font-size:140rpx;font-weight:normal;margin-top:0;margin-right:0px;line-height:140rpx;max-height:140rpx;">{{now_tmp}}</text>
+						<view style="height:100%;display: flex;flex-flow: column nowrap;justify-content:flex-end;">
+							<text class="temperature">℃</text>
+						</view>
+					</view>
+					<text class="main_weather_text">{{now_wind_dir}}{{now_wind_sc}}级 {{now_wind_spd}}km/h</text>
+					<text class="main_weather_text">湿度{{now_hum}}%  气压{{now_pres}}hPa</text>
+				</view>
+			</view>
+			<scroll-view class="weather_container_main" scroll-x enable-flex scroll-with-animation>
+				<block wx:for="{{daily_forecast}}">
+					<view class="weather_container">
+						<view><image class="weather_icon" src="../../src/weather_icon/{{item.cond_code}}.png" mode="aspectFit" /></view>
+						<view class="weather_temp">{{item.tmp_max}}℃</view>
+						<view class="weather_cond">{{item.cond_txt}}</view>
+					</view>
+				</block>
+			</scroll-view>
+		</view>
+	</scroll-view> -->
+	<swiper class="swiper-style" indicator-dots bindchange="swiperChange">
+		<swiper-item class="swiper-item-card">
+			<view class="card">
+				<view wx:if="{{location!='null'}}" style="margin-top:20rpx;">
+					<view class="city">{{admin_area}}-{{parent_city}}-{{location}}</view>
+					<view class="update_time">{{update_time}}</view>
+				</view>
+				<view wx:else style="height:auto;">
+					<view class="city">正在获取位置...</view>
+					<view class="update_time">00:00:00</view>
+				</view>
+				<view class="table">
+					<view class="t1"> 
+						<image class="main_weather_icon" src="../../src/weather_icon/{{now_cond_code}}.png" mode="aspectFit" />
+					</view>
+					<view class="t1" style="width:5rpx;height:100%;margin:5rpx;">
+						<view style="background-color:whitesmoke;width:2px;height:80%;"></view>
+					</view>
+					<view class="t1" style="flex-flow:column wrap;align-content:center;justify-content:center;"> 
+						<view style="justify-content:center;display:flex;flex-flow:row nowrap;height:140rpx;">
+							<text class="main_weather_text" style="font-family:'Consolas';font-size:140rpx;font-weight:normal;margin-top:0;margin-right:0px;line-height:140rpx;max-height:140rpx;">{{now_tmp}}</text>
+							<view style="height:100%;display: flex;flex-flow: column nowrap;justify-content:flex-end;">
+								<text class="temperature">℃</text>
+							</view>
+						</view>
+						<text class="main_weather_text">{{now_wind_dir}}{{now_wind_sc}}级 {{now_wind_spd}}km/h</text>
+						<text class="main_weather_text">湿度{{now_hum}}%  气压{{now_pres}}hPa</text>
+					</view>
+				</view>
+				<scroll-view class="weather_container_main" scroll-x enable-flex scroll-with-animation>
+					<block wx:for="{{daily_forecast}}" wx:key="*this">
+						<view class="weather_container">
+							<view class="weather_cond" style="min-height:27rpx;margin-bottom:5rpx;">{{item.week}}</view>
+							<view class="weather_cond" style="min-height:27rpx;margin-bottom:10rpx;">{{item.date}}</view>
+							<view><image class="weather_icon" src="../../src/weather_icon/{{item.cond_code}}.png" mode="aspectFit" /></view>
+							<view class="weather_temp">{{item.tmp_max}}℃</view>
+							<view class="weather_cond">{{item.cond_txt}}</view>
+						</view>
+					</block>
+				</scroll-view>
+			</view>
+		</swiper-item>
+		<swiper-item class="swiper-item-card">
+			<view class="card">
+				<view class="CenterContent" bind:>
+					<!-- <image class="AddIcon" src="https://7765-weather-1mpa4-1300225964.tcb.qcloud.la/%E6%B7%BB%E5%8A%A0.png?sign=24e73d3bb2a3312745d07cc2e1fcbb2c&t=1572885260" bindtap="toCitySelector"/> -->
+					<button class="AddIcon" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" bindtap="toCitySelector"></button>
+					<text style="size:30rpx;margin-top:30rpx;color:white;" >添加城市</text>
+				</view>
+			</view>
+		</swiper-item>
+		<swiper-item class="swiper-item-card">
+			<view class="MessCard">
+				<form bindsubmit="formSubmit" bindreset="formReset" class="FormStyle">
+					<!-- <view class="FormContentStyle1">					 -->
+						<input class="input-style" placeholder="每日一句" name="messageInput"/>
+						<input class="input-style" placeholder="作者" name="authorInput"/>
+						<button form-type="submit" class="BigButton" style="margin-top:50rpx;" >提交</button>
+						<button form-type="reset" class="BigButton" >删除当前语句</button>
+					<!-- </view> -->
+				</form>
+			</view>
+		</swiper-item>
+	</swiper>
+	<text class="DailyMessageText">{{daily_message}}</text>
+	<text class="DailyMessageAuthorText">——{{daily_message_author}}</text>
+</view>

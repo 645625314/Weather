@@ -1,0 +1,48 @@
+<!--miniprogram/pages/cityselector.wxml-->
+<view class="CenterContent" style="/*background-color:#dddddd;*/">
+    <view class="ThreeButtonsView">
+        <text class="SmallTitle">省/直辖市</text>
+        <button bindtap="onProvinceReset" disabled="{{!isProvinceSelected}}" class="ButtonStyle" type="primary" style="min-width:90%;">
+            {{province}}
+        </button>
+    </view>
+    <view class="ThreeButtonsView">
+        <text class="SmallTitle">市</text>
+        <button bindtap="onCityReset" disabled="{{!isCitySelected}}" class="ButtonStyle" type="primary" style="min-width:90%;">
+            {{city}}
+        </button>
+    </view>
+    <view class="ThreeButtonsView">
+        <text class="SmallTitle">区/县</text>
+        <button bindtap="onDistrictReset" disabled="{{!isDistrictSelected}}" class="ButtonStyle" type="primary" style="min-width:90%;">
+            {{district}}
+        </button>
+    </view>
+</view>
+<view class="CenterContent" style="height:100%;">
+    <block wx:if="{{!isProvinceSelected}}">
+        <block wx:for="{{province_list}}" wx:key="*this">
+            <button mark:province="{{item}}" class="ButtonStyle"  type="primary" bindtap="onProvinceButtonClicked">{{item}}</button>
+        </block>
+    </block>
+    <block wx:elif="{{!isCitySelected}}">
+        <block wx:for="{{city_list}}" wx:key="*this">
+            <button mark:city="{{item}}" class="ButtonStyle" type="primary" bindtap="onCityButtonClicked">{{item}}</button>
+        </block>
+    </block>
+    <block wx:elif="{{!isDistrictSelected}}">
+        <block wx:for="{{district_list}}" wx:key="*this">
+            <button mark:district="{{item}}" class="ButtonStyle" type="primary" bindtap="onDistrictButtonClicked">{{item}}</button>
+        </block>
+    </block>
+    <block wx:else>
+        <view class="CenterContent SubmitContent">
+            <text style="margin:15rpx;text-align:center;" >点击上方绿色按钮可进行重新选择</text>
+            <view class="CenterContent" style="width:100%;margin-top:15rpx;">
+                <button class="ButtonStyle" type="primary" style="max-width:50%;" bindtap="onSubmitClicked">
+                    提交
+                </button>
+            </view>
+        </view>
+    </block>
+</view>

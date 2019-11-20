@@ -1,0 +1,54 @@
+/* miniprogram/pages/cityselector.wxss */
+.SmallTitle{
+    font-size: 25rpx;
+    line-height: 25rpx;
+    color: #333333;
+}
+.ThreeButtonsView{
+    padding-top: 10rpx;
+    padding-bottom: 10rpx;
+    min-width: 30%;
+    max-width: 30%;
+    min-height: 100rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.CenterContent{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-direction: row;
+    align-content: flex-start;
+    min-height: 140rpx;
+}
+.SubmitContent{
+    height: 100%;
+    width: 100%;
+    /* background-color:#dddddd; */
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    box-sizing: content-box;
+}
+/*  align-self是对某个元素来说的 
+    align-items是对一行而言的
+    align-content是对整体而言的
+    justify-content是对flex-direction规定的主方向而言的*/
+.ButtonStyle{
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 10rpx;
+    font-size: 30rpx;
+    line-height: 80rpx;
+    height: 80rpx;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    margin-left: 10rpx;
+    margin-right: 10rpx;
+    margin-top: 10rpx;
+    text-decoration: none;
+    /* overflow: scroll; */
+    vertical-align: middle;
+}
