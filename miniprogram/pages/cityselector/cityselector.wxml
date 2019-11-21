@@ -1,5 +1,4 @@
 <!--miniprogram/pages/cityselector.wxml-->
-<import src="../../plugins/wxParse/wxParse.wxml"/>
 <view class="CenterContent" style="/*background-color:#dddddd;*/">
     <view class="ThreeButtonsView">
         <text class="SmallTitle">省/直辖市</text>
