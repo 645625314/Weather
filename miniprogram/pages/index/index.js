@@ -11,6 +11,21 @@ function getFormatDate(){
 	if(day.length==1) day = "0"+day;
 	return year+month+day;
 }
+async function requestSync(url){
+	return new Promise((resolve, reject)=>{
+		wx.request({
+			url: url,
+			method: 'POST',
+			dataType: 'json',
+			success: res=>{
+				resolve(res);
+			},
+			fail: res=>{
+				reject(res);
+			}
+		})
+	})
+}
 Page({
 	data: {
 		motto: app.xxcMess,
@@ -253,9 +268,44 @@ Page({
 		})
 	},
 	onShow: function(){
-		console.log("show");
+		/* console.log("show");
 		if(this.city_code_add.length!=0){
 			console.log(this.city_code_add);
-		}
+		} */
+		var city_list = [];
+		wx.cloud.callFunction({
+			name: "getCityList",
+			complete: function(res){
+				city_list = res.result.city_list;
+				console.log(city_list);
+				var now_weather;
+				var forecast_weather;
+				for(var i=0;i<city_list.length;i++){
+					requestSync("https://free-api.heweather.net/s6/weather/now?key=70cc10f046b24a45b2a09fe0156c5e40&location="+city_list[i]).then(res=>{
+						now_weather = res;
+						console.log(now_weather);
+					})
+					/* wx.request({
+						url: "https://free-api.heweather.net/s6/weather/now?key=70cc10f046b24a45b2a09fe0156c5e40&location="+city_list[i],
+						method: 'POST',
+						dataType: 'json',
+						complete: res => {
+							now_weather = res;
+							console.log(now_weather);
+						}
+					});
+					wx.request({
+						url: "https://free-api.heweather.net/s6/weather/forecast?key=70cc10f046b24a45b2a09fe0156c5e40&location="+city_list[i],
+						method: 'POST',
+						dataType: 'json',
+						complete: res => {
+							forecast_weather = res;
+							console.log(forecast_weather);
+						}
+					}); */
+					console.log(now_weather);
+				}
+			}
+		});
 	},
 })
