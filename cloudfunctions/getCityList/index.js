@@ -6,11 +6,11 @@ cloud.init()
 // 云函数入口函数
 exports.main = async (event, context) => {
 	let{OPENID} = cloud.getWXContext();
-	const db = cloud.database().collection("USER");
+	const db = cloud.database();
 	var city_list = [];
 	var that = this;
 
-	await db.where({
+	await db.collection("USER").where({
 		_id: OPENID
 	}).field({
 		city_list: true

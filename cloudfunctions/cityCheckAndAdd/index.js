@@ -14,8 +14,8 @@ exports.main = async (event, context) => {
 	var city_list;
 	// var thisContext = this;
 	var STATE_CODE = 0;
-	const db = cloud.database().collection("USER");
-	await db.where({
+	const db = cloud.database();
+	await db.collection("USER").where({
 		_id: OPENID
 	}).field({
 		city_list: true
@@ -42,21 +42,21 @@ exports.main = async (event, context) => {
 				city_list = city_list.concat(newCity);
 				city_list.sort();
 			}
-			db.where({
-				_id:OPENID
-			}).update({
-				data:{
-					city_list: city_list
-				}
-			}).then(
-				res3=>{
-					console.log("update");
-					console.log(res3);
-				}
-			);
-			console.log(city_list);
 		}
 	);
+	await db.collection("USER").where({
+		_id: OPENID
+	}).update({
+		data:{
+			city_list: city_list
+		}
+	}).then(
+		res3=>{
+			console.log("update");
+			console.log(res3);
+		}
+	);
+	console.log(city_list);
 	return{
 		STATE_CODE
 	}

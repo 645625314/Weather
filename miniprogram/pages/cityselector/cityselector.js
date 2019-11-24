@@ -199,10 +199,7 @@ Page({
 				// console.log(res.data[0]._id);
 				var pageStacks = getCurrentPages();
 				var lastPage = pageStacks[pageStacks.length-2];
-				lastPage.city_code_add = res.data[0]._id;
-				wx.navigateBack({
-					delta: 1
-				});
+				// lastPage.city_code_add = res.data[0]._id;
 				wx.cloud.callFunction({
 					name:"cityCheckAndAdd",
 					data:{
@@ -211,7 +208,10 @@ Page({
 					complete: function(res2) {
 						console.log(res2);
 					}
-				})
+				});
+				wx.navigateBack({
+					delta: 1
+				});
 				wx.hideLoading();
 			}
 		});
