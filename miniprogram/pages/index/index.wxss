@@ -1,272 +1,325 @@
 /**index.wxss**/
 .userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+	width: 128rpx;
+	height: 128rpx;
+	margin: 20rpx;
+	border-radius: 50%;
 }
 
 .userinfo-nickname {
-  color: #aaa;
+	color: #aaa;
 }
 /* .container_margin_top{
-  position: absolute;
-  top: 52rpx;
+	position: absolute;
+	top: 52rpx;
 } */
 .usermotto {
-  margin-top: 200px;
+	margin-top: 200px;
 }
 .city{
-  color:whitesmoke;
-  font-size: 50rpx;
-  font-family: '微软雅黑';
-  font-weight: lighter;
-  text-align: center;
-  margin-top: 60rpx;
+	color:whitesmoke;
+	font-size: 50rpx;
+	font-family: '微软雅黑';
+	font-weight: lighter;
+	text-align: center;
+	margin-top: 40rpx;
+	transition: margin-top 1s;
+	-moz-transition: margin-top 1s; 
+	-webkit-transition: margin-top 1s;
+	-o-transition: margin-top 1s;
 }
 .update_time{
-  color:whitesmoke;
-  font-size: 25rpx;
-  font-family: '微软雅黑';
-  font-weight: lighter;
-  text-align: center;
-  margin-top:9rpx;
+	color:whitesmoke;
+	font-size: 25rpx;
+	font-family: '微软雅黑';
+	font-weight: lighter;
+	text-align: center;
+	margin-top:9rpx;
 }
 ::-webkit-scrollbar{
-  width: 0;
-  height: 0;
-  color: transparent;
+	width: 0;
+	height: 0;
+	color: transparent;
 }
 .weather_container_main{
-  width: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  margin-top: 80rpx;
+	width: 100%;
+	text-align: center;
+	display: flex;
+	flex-direction: row;
+	margin-top: 40rpx;
+	transition: margin-top 1s;
+	-moz-transition: margin-top 1s; 
+	-webkit-transition: margin-top 1s;
+	-o-transition: margin-top 1s;
 }
 .weather_container{
-  width: 20%;
+	width: 20%;
 }
 /* 温度的样式 */
 .weather_temp{
-  color: whitesmoke;
-  font-size: 36rpx;
+	color: whitesmoke;
+	font-size: 36rpx;
 }
 /* 天气状态的样式 */
 .weather_cond{
-  color: whitesmoke;
-  font-size: 27rpx;
-  line-height: 27rpx;
-  width: 127rpx;
-  min-height: 27rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+	color: whitesmoke;
+	font-size: 27rpx;
+	line-height: 27rpx;
+	width: 127rpx;
+	min-height: 27rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 
 }
 .weather_icon{
-  margin: 10rpx;
-  height: 91rpx;
-  width: 91rpx;
+	margin: 10rpx;
+	height: 91rpx;
+	width: 91rpx;
 }
 .main_weather_icon{
-  height: 80%;
-  width: 80%;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  /* background-color: blue; */
-  /* margin-left: 40rpx; */
+	height: 80%;
+	width: 80%;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	/* background-color: blue; */
+	/* margin-left: 40rpx; */
 }
 .main_weather_text{
-  font-family: 'Consolas';
-  font-weight: lighter;
-  color: whitesmoke;
-  font-size: 30rpx;
-  margin-top: 5rpx;
-  text-align: center;
-  word-wrap: normal;
-  /* width: 100%; */
-  /* margin-right: 25rpx; */
+	font-family: 'Consolas';
+	font-weight: lighter;
+	color: whitesmoke;
+	font-size: 30rpx;
+	margin-top: 5rpx;
+	text-align: center;
+	word-wrap: normal;
+	/* width: 100%; */
+	/* margin-right: 25rpx; */
 }
 .table{
-  width: 100%;
-  height: 300rpx;
-  display: flex;
-  flex-flow: row nowrap;
-  margin-top: 50rpx;
-  align-items: space-around;
-  justify-content: space-around;
+	width: 100%;
+	height: 300rpx;
+	display: flex;
+	flex-flow: row nowrap;
+	margin-top: 40rpx;
+	align-items: space-around;
+	justify-content: space-around;
+	transition: margin-top 1s;
+	-moz-transition: margin-top 1s; 
+	-webkit-transition: margin-top 1s;
+	-o-transition: margin-top 1s;
 }
 /* align是垂直方向的排列相关的
-   justify是水平方向的排列相关的
-   center是各个元素为一整体，居中
-   space-around每个元素单独分开，分散居中
-   space-between最外侧的元素的最外侧没有空白
-   align-items对单行多行都有效，
-   align-content只对多行有效果，单行无效果
-   */
+	 justify是水平方向的排列相关的
+	 center是各个元素为一整体，居中
+	 space-around每个元素单独分开，分散居中
+	 space-between最外侧的元素的最外侧没有空白
+	 align-items对单行多行都有效，
+	 align-content只对多行有效果，单行无效果
+	 */
 /* t1 垂直水平都是居中的 */
 .t1{
-  max-width: 45%;
-  width: 45%;
-  height: 100%;
-  display: flex;
-  flex-flow:  column nowrap;
-  align-items: center;
-  justify-content: center;
-  /* background-color: red; */
+	max-width: 45%;
+	width: 45%;
+	height: 100%;
+	display: flex;
+	flex-flow:  column nowrap;
+	align-items: center;
+	justify-content: center;
+	/* background-color: red; */
 }
 .temperature{
-  color: whitesmoke;
-  font-family:Arial;
-  font-size:50rpx;
-  line-height: 50rpx;
-  max-height: 50rpx;
-  margin-bottom: 10rpx;
-  margin-left: 5rpx;
-  /* padding-bottom: 10rpx; */
-  /* margin-right: 25rpx; */
+	color: whitesmoke;
+	font-family:Arial;
+	font-size:50rpx;
+	line-height: 50rpx;
+	max-height: 50rpx;
+	margin-bottom: 10rpx;
+	margin-left: 5rpx;
+	/* padding-bottom: 10rpx; */
+	/* margin-right: 25rpx; */
 }
 .card{
-  /* margin-top: 10%; */
-  height: 90%;
-  width: 95%;
-  border-radius: 30rpx;
-  /* padding: 20rpx; */
-  margin-top: 10rpx;
-  /* background: url('https://7765-weather-1mpa4-1300225964.tcb.qcloud.la/bkgrd.jpg?sign=9ffe1dab242960b529fa41092b08a8d2&t=1572882201') fixed center,rgba(0.1,0.1,0.1,0.5); */
-  background-position: 100% 100%;
-  background-size: 100%;
-  background-color: rgba(0.1,0.1,0.1,0.5);
-}
-.swiper-item-card::after{
-  content: "";
-  position: absolute;
-  margin-top: 10rpx;
-  height: 90%;
-  width: 95%;
-  border-radius: 30rpx;
-  /* box-sizing: content-box; */
-  background: url('https://7765-weather-1mpa4-1300225964.tcb.qcloud.la/bkgrd.jpg?sign=6341b5b3f94c6bfb1e0063dcd005d6ac&t=1572883419') fixed center;
-  z-index: -1;
+	/* margin-top: 10%; */
+	height: 940rpx;
+	width: 95%;
+	border-radius: 30rpx;
+	/* padding: 20rpx; */
+	margin-top: 10rpx;
+	/* background: url('https://7765-weather-1mpa4-1300225964.tcb.qcloud.la/bkgrd.jpg?sign=9ffe1dab242960b529fa41092b08a8d2&t=1572882201') fixed center,rgba(0.1,0.1,0.1,0.5); */
+	background-position: 100% 100%;
+	background-size: 100%;
+	background-color: rgba(0.1,0.1,0.1,0.5);
 }
 .weather-container{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  /* background-color: red; */
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	/* background-color: red; */
 }
 .swiper-style{
-  height: 85%;
-  width: 100%;
-  box-sizing: content-box;
-  padding: 10px;
-  /* background-color: blue; */
+	/* height: 85%; */
+	height: 1042rpx;
+	width: 100%;
+	box-sizing: content-box;
+	padding: 10px;
+	margin-top: 10%;
+	/* background-color: blue; */
 }
 /* padding是内边距
-   margin是外边距 */
+	 margin是外边距 */
 .swiper-item-card{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
+	/* height: 100%; */
+	width: 100%;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+}
+.swiper-item-card::after{
+	content: "";
+	position: absolute;
+	margin-top: 10rpx;
+	height: 940rpx;
+	width: 95%;
+	border-radius: 30rpx;
+	/* box-sizing: content-box; */
+	background: url('https://7765-weather-1mpa4-1300225964.tcb.qcloud.la/bkgrd.jpg?sign=6341b5b3f94c6bfb1e0063dcd005d6ac&t=1572883419') fixed center;
+	z-index: -1;
+}
+.SwiperItemCardLongPress{
+	height: 742rpx;
+	background-color: red;
 }
 .input-style{
-  width: 600rpx;
-  height: 50rpx;
-  size: 40rpx;
-  background-color: whitesmoke;
-  margin-top: 10rpx;
-  margin-bottom: 10rpx;
-  border-radius: 15rpx;
-  align-items: center;
-  padding-left: 10rpx;
-  padding-top: 10rpx;
-  padding-bottom: 10rpx;
+	width: 600rpx;
+	height: 50rpx;
+	size: 40rpx;
+	background-color: whitesmoke;
+	margin-top: 10rpx;
+	margin-bottom: 10rpx;
+	border-radius: 15rpx;
+	align-items: center;
+	padding-left: 10rpx;
+	padding-top: 10rpx;
+	padding-bottom: 10rpx;
 }
 .BigButton{
-  height: 70rpx;
-  width: 500rpx;
-  text-align: center;
-  line-height: 70rpx;
-  background-color: rgba(255 , 255,255, 0.5);
-  color: #333333;
-  margin-top: 10rpx;
-  border-radius: 15rpx;
+	height: 70rpx;
+	width: 500rpx;
+	text-align: center;
+	line-height: 70rpx;
+	background-color: rgba(255 , 255,255, 0.5);
+	color: #333333;
+	margin-top: 10rpx;
+	border-radius: 15rpx;
 }
 .MessCard{
-  margin-top: 10%;
-  height: 90%;
-  width: 95%;
-  border-radius: 30rpx;
-  margin: 10rpx;
-  background-color: rgba(0.1,0.1,0.1,0.5);
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  align-content: center;
+	margin-top: 10%;
+	height: 90%;
+	width: 95%;
+	border-radius: 30rpx;
+	margin: 10rpx;
+	background-color: rgba(0.1,0.1,0.1,0.5);
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	align-content: center;
 }
 .FormStyle{
-  width: 100%;
-  height: 100%;
-  /* display: flex;
-  flex-flow: row nowrap;
-  align-items: center; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+	width: 100%;
+	height: 100%;
+	/* display: flex;
+	flex-flow: row nowrap;
+	align-items: center; */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
 .FormContentStyle1{
-  width: 500rpx;
-  height: 250rpx;
-  background-color: yellow;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
+	width: 500rpx;
+	height: 250rpx;
+	background-color: yellow;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
 }
 .DailyMessageText{
-  font-size: 30rpx;
+	font-size: 30rpx;
 }
 .DailyMessageAuthorText{
-  font-size: 25rpx;
+	font-size: 25rpx;
 }
 .CenterContent{
-  height: 100%;
-  width:100%;
-  display: flex;
-  flex-flow: column wrap;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
+	height: 100%;
+	width:100%;
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
 }
 .AddIcon{
-  height: 100rpx;
-  width: 100rpx;
-  /* background: fixed;
-  border-color: white;
-  border-style: dashed;
-  border-width: 8rpx;
-  border-radius: 50rpx;
-  font-size: 100rpx;
-  color: white;
-  line-height: 100rpx;
-  text-align: center; */
-  margin: 0rpx;
-  padding: 0rpx;
-  background: url("https://7765-weather-1mpa4-1300225964.tcb.qcloud.la/%E6%B7%BB%E5%8A%A0.png?sign=24e73d3bb2a3312745d07cc2e1fcbb2c&t=1572885260");
-  background-size: 100rpx 100rpx;
-  background-position: center center;
+	height: 100rpx;
+	width: 100rpx;
+	/* background: fixed;
+	border-color: white;
+	border-style: dashed;
+	border-width: 8rpx;
+	border-radius: 50rpx;
+	font-size: 100rpx;
+	color: white;
+	line-height: 100rpx;
+	text-align: center; */
+	margin: 0rpx;
+	padding: 0rpx;
+	background: url("https://7765-weather-1mpa4-1300225964.tcb.qcloud.la/%E6%B7%BB%E5%8A%A0.png?sign=24e73d3bb2a3312745d07cc2e1fcbb2c&t=1572885260");
+	background-size: 100rpx 100rpx;
+	background-position: center center;
+}
+.DeleteAndCancelIcon{
+	height: 70rpx;
+	width: 70rpx;
+}
+.DeleteAndCancelView{
+	margin-top: 10rpx;
+	height: 100%;
+	width: 40%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+	align-items: center;
+}
+.DeleteAndCancelViewText{
+	font-size: 27rpx;
+	line-height: 27rpx;
+	color: whitesmoke;
+	margin-top: 10rpx;
+	text-align: center;
+}
+.DeleteAndCancelContainer{
+	width: 100%;
+	height: 150rpx;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    align-content: center;
+	opacity: 0;
+	transition: opacity 1s;
+	-moz-transition: opacity 1s; 
+	-webkit-transition: opacity 1s;
+	-o-transition: opacity 1s;
 }

@@ -2,6 +2,7 @@
 //获取应用实例
 // 584f6a04c1b300297b641fb6e3960f34
 const app = getApp();
+var isFirstLoad = true;
 const HEWEATHER_KEY = "70cc10f046b24a45b2a09fe0156c5e40";
 function getFormatDate(){
 	var date = new Date();
@@ -12,7 +13,7 @@ function getFormatDate(){
 	if(day.length==1) day = "0"+day;
 	return year+month+day;
 }
- function requestSync(url,count,city){
+function requestSync(url,count,city){
 	return new Promise((resolve, reject)=>{
 		wx.request({
 			url: url,
@@ -30,6 +31,10 @@ function getFormatDate(){
 			}
 		})
 	})
+}
+function sleep(time){
+    var startTime = new Date().getTime() + parseInt(time, 10);
+    while(new Date().getTime() < startTime) {}
 }
 Page({
 	data: {
@@ -66,7 +71,7 @@ Page({
 	//   })
 	// },
 	swiperChange: function(e){
-		console.log(e);
+		//console.log(e);
 		// if(e.detail.current==1&e.detail.source=="touch"){
 		// }
 	},
@@ -238,28 +243,32 @@ Page({
 			}
 		});
 	},
-	getLatitude:function(){
-		console.log(this.latitude);
-	},
 	onPullDownRefresh: function(e){
-		console.log(this.city_weather_list);
+		console.log(this.city_list);
+		this.city_weather_list = [];
+		this.city_list = [];
+		isFirstLoad = true;
+		this.setData({
+			city_weather_list: this.city_weather_list,
+			city_list: this.city_list
+		})
 		wx.showToast({
 			title: '刷新',
 			icon: 'success',
 			duration: 1500
 		});
-		this.getLatitude();
 		this.onLoad();
+		sleep(250);
 		this.onShow();
+		sleep(250);
 		wx.stopPullDownRefresh();
 	},
 	getLocation:function(e){
 		var data = e.currentTarget.dataset;
-		console.log(data);
+		// console.log(data);
 		var pos = data.pos;
 		var url = 'https://free-api.heweather.net/s6/weather/now?key='+HEWEATHER_KEY+'&location=' + pos;
-		var cid
-		console.log(url);
+		// console.log(url);
 		wx.request({
 			url: url,
 			method : 'POST',
@@ -271,68 +280,79 @@ Page({
 					parent_city: res.data.HeWeather6[0].basic.parent_city,
 					admin_area: res.data.HeWeather6[0].basic.admin_area
 				})
-				console.log(res);
-				console.log(res.data.HeWeather6[0].basic);
+				// console.log(res);
+				// console.log(res.data.HeWeather6[0].basic);
 			}
 		})
 	},
-	onShow: function(){
-		var thisapp = this;
+	onSwiperItemLongPress: function(e){
+		// console.log(e.mark);
+		this.city_weather_list[e.mark.number].height = 840;
+		this.city_weather_list[e.mark.number].margin_top = 30;
+		this.city_weather_list[e.mark.number].opacity = 1;
+		this.setData({
+			city_weather_list: this.city_weather_list
+		});
+	},
+	onCityDelete: function(e){
+		var number = e.mark.number;
+		wx.showLoading({
+			title:"正在删除"
+		});
+		console.log("Start to delete");
+		console.log(this.city_weather_list);
+		this.city_weather_list.splice(number,1);
+		this.city_list.splice(number,1);
+		console.log(this.city_weather_list);
+		this.setData({
+			city_weather_list: this.city_weather_list,
+			city_list: this.city_list
+		});
 		wx.cloud.callFunction({
-			name: "getCityList",
-			complete: function(res){
-				thisapp.city_list = res.result.city_list;
-				console.log(thisapp.city_list);
-				thisapp.city_weather_list = new Array(thisapp.city_list.length);
-				console.log(thisapp.city_weather_list);
-				for(var j=0;j<thisapp.city_list.length;j++){
-					var thisj = j;
-					var this_city = thisapp.city_list[j];
-					console.log("j="+thisj+" city="+this_city);
-					requestSync("https://free-api.heweather.net/s6/weather/now?key="+HEWEATHER_KEY+"&location="+this_city,thisj,this_city)
-					.then(res1=>{
-						console.log("j="+res1.count);
-						thisapp.city_weather_list[res1.count] = {
-							location: res1.data.HeWeather6[0].basic.location,
-							admin_area: res1.data.HeWeather6[0].basic.admin_area,
-							parent_city: res1.data.HeWeather6[0].basic.parent_city,
-							update_time: res1.data.HeWeather6[0].update.loc,
-							now_cond_code: res1.data.HeWeather6[0].now.cond_code,
-							now_tmp: res1.data.HeWeather6[0].now.tmp,
-							now_wind_dir: res1.data.HeWeather6[0].now.wind_dir,
-							now_wind_sc: res1.data.HeWeather6[0].now.wind_sc,
-							now_wind_spd: res1.data.HeWeather6[0].now.wind_spd,
-							now_hum: res1.data.HeWeather6[0].now.hum,
-							now_pres: res1.data.HeWeather6[0].now.pres,
-							daily_forecast: new Array(7)
-						};
-						requestSync("https://free-api.heweather.net/s6/weather/forecast?key="+HEWEATHER_KEY+"&location="+res1.city,res1.count,res1.city)
-						.then(res2=>{
-							var s;
-							var myDate;
-							for(var count=0;count<7;count++){
-								s = res2.data.HeWeather6[0].daily_forecast[count].date;
-								myDate = new Date(s);
-								thisapp.city_weather_list[res2.count].daily_forecast[count]={
-									date: String(s).substr(5,10),
-									week: (count==0)?"今天":thisapp.week[parseInt(myDate.getUTCDay())],
-									cond_code: res2.data.HeWeather6[0].daily_forecast[count].cond_code_d,
-									tmp_max: res2.data.HeWeather6[0].daily_forecast[count].tmp_min,
-									cond_txt: res2.data.HeWeather6[0].daily_forecast[count].cond_txt_d
-								}
-							}
-							thisapp.setData({
-								city_weather_list: thisapp.city_weather_list
-							});
-							console.log(thisapp.city_weather_list[res2.count]);
-						})
-					});
-					/* wx.request({
-						url:"https://free-api.heweather.net/s6/weather/now?key=70cc10f046b24a45b2a09fe0156c5e40&location="+this_city,
-						method : 'POST',
-						dataType : 'json',
-						success: res1=>{
-							this.city_weather_list[thisj] = {
+			name: "cityDelete",
+			data:{
+				city_list: this.city_list
+			},
+			complete:function(res){
+				console.log(res);
+			}
+		});
+		sleep(250);
+		this.onShow();
+		sleep(250);
+		wx.hideLoading();
+	},
+	onShow: function(){
+		console.log("show");
+		var thisapp = this;
+		if(isFirstLoad){
+			console.log("first load");
+			isFirstLoad = false;
+			this.city_weather_list = [];
+			this.city_list = [];
+			this.setData({
+				city_list : this.city_list,
+				city_weather_list : this.city_weather_list
+			})
+			wx.cloud.callFunction({
+				name: "getCityList",
+				complete: function(res){
+					thisapp.city_list = res.result.city_list;
+					console.log(thisapp.city_list);
+					thisapp.city_weather_list = new Array(thisapp.city_list.length);
+					console.log(thisapp.city_weather_list);
+					for(var j=0;j<thisapp.city_list.length;j++){
+						var thisj = j;
+						var this_city = thisapp.city_list[j];
+						console.log("j="+thisj+" city="+this_city);
+						requestSync("https://free-api.heweather.net/s6/weather/now?key="+HEWEATHER_KEY+"&location="+this_city,thisj,this_city)
+						.then(res1=>{
+							console.log("j="+res1.count);
+							thisapp.city_weather_list[res1.count] = {
+								height: 940,
+								margin_top: 50,
+								opacity: 0,
+								number: res1.count,
 								location: res1.data.HeWeather6[0].basic.location,
 								admin_area: res1.data.HeWeather6[0].basic.admin_area,
 								parent_city: res1.data.HeWeather6[0].basic.parent_city,
@@ -346,55 +366,84 @@ Page({
 								now_pres: res1.data.HeWeather6[0].now.pres,
 								daily_forecast: new Array(7)
 							};
-							console.log("success j="+thisj+" city="+this_city);
-							wx.request({
-								url:"https://free-api.heweather.net/s6/weather/forecast?key=70cc10f046b24a45b2a09fe0156c5e40&location="+this_city,
-								method : 'POST',
-								dataType : 'json',
-								success: res2=>{
-									var s;
-									var myDate;
-									for(var count=0;count<7;count++){
-										s = res2.data.HeWeather6[0].daily_forecast[count].date;
-										myDate = new Date(s);
-										this.city_weather_list[thisj].daily_forecast[count]={
-											date: String(s).substr(5,10),
-											week: (count==0)?"今天":thisapp.week[parseInt(myDate.getUTCDay())],
-											cond_code: res2.data.HeWeather6[0].daily_forecast[count].cond_code_d,
-											tmp_max: res2.data.HeWeather6[0].daily_forecast[count].tmp_min,
-											cond_txt: res2.data.HeWeather6[0].daily_forecast[count].cond_txt_d
-										}
+							requestSync("https://free-api.heweather.net/s6/weather/forecast?key="+HEWEATHER_KEY+"&location="+res1.city,res1.count,res1.city)
+							.then(res2=>{
+								var s;
+								var myDate;
+								for(var count=0;count<7;count++){
+									s = res2.data.HeWeather6[0].daily_forecast[count].date;
+									myDate = new Date(s);
+									thisapp.city_weather_list[res2.count].daily_forecast[count]={
+										date: String(s).substr(5,10),
+										week: (count==0)?"今天":thisapp.week[parseInt(myDate.getUTCDay())],
+										cond_code: res2.data.HeWeather6[0].daily_forecast[count].cond_code_d,
+										tmp_max: res2.data.HeWeather6[0].daily_forecast[count].tmp_min,
+										cond_txt: res2.data.HeWeather6[0].daily_forecast[count].cond_txt_d
 									}
 								}
+								thisapp.setData({
+									city_weather_list: thisapp.city_weather_list
+								});
+								console.log(thisapp.city_weather_list[res2.count]);
 							})
-							console.log(thisapp.city_weather_list[j]); 
-						}
-					}); */
-
-					/* requestSync("https://free-api.heweather.net/s6/weather/now?key=70cc10f046b24a45b2a09fe0156c5e40&location="+this.city_list[i])
-					.then(
-						res1=>{//当前天气查询返回结果
-							this.city_weather_list[i] = {
-								location: res1.data.HeWeather6[0].basic.location,
-								admin_area: res1.data.HeWeather6[0].basic.admin_area
-							}
-							console.log(this.city_weather_list);
-
-							// this.city_weather_list[i].location = "东城";
-							// this.city_weather_list[i].admin_area = res1.data.HeWeather6[0].basic.admin_area;
-							// this.city_weather_list[i].parent_city = res1.data.HeWeather6[0].basic.parent_city;
-							// this.city_weather_list[i].update_time = res1.data.HeWeather6[0].update.loc;
-							// this.city_weather_list[i].now_cond_code = res1.data.HeWeather6[0].now.cond_code;
-							// this.city_weather_list[i].now_tmp = res1.data.HeWeather6[0].now.tmp;
-							// this.city_weather_list[i].now_wind_dir = res1.data.HeWeather6[0].now.wind_dir;
-							// this.city_weather_list[i].now_wind_sc = res1.data.HeWeather6[0].now.wind_sc;
-							// this.city_weather_list[i].now_wind_spd = res1.data.HeWeather6[0].now.wind_spd;
-							// this.city_weather_list[i].now_hum = res1.data.HeWeather6[0].now.hum;
-							// this.city_weather_list[i].now_pres = res1.data.HeWeather6[0].now.pres;
-						}
-					); */
+						});
+					}
 				}
+			});
+		}else{
+			console.log("not first load");
+			thisapp.city_weather_list = new Array(thisapp.city_list.length);
+			console.log("this");
+			console.log(this);
+			console.log(this.city_list);
+			for(var j=0;j<thisapp.city_list.length;j++){
+				var thisj = j;
+				var this_city = thisapp.city_list[j];
+				console.log("j="+thisj+" city="+this_city);
+				requestSync("https://free-api.heweather.net/s6/weather/now?key="+HEWEATHER_KEY+"&location="+this_city,thisj,this_city)
+				.then(res1=>{
+					console.log("j="+res1.count);
+					thisapp.city_weather_list[res1.count] = {
+						height: 940,
+						margin_top: 50,
+						opacity: 0,
+						number: res1.count,
+						location: res1.data.HeWeather6[0].basic.location,
+						admin_area: res1.data.HeWeather6[0].basic.admin_area,
+						parent_city: res1.data.HeWeather6[0].basic.parent_city,
+						update_time: res1.data.HeWeather6[0].update.loc,
+						now_cond_code: res1.data.HeWeather6[0].now.cond_code,
+						now_tmp: res1.data.HeWeather6[0].now.tmp,
+						now_wind_dir: res1.data.HeWeather6[0].now.wind_dir,
+						now_wind_sc: res1.data.HeWeather6[0].now.wind_sc,
+						now_wind_spd: res1.data.HeWeather6[0].now.wind_spd,
+						now_hum: res1.data.HeWeather6[0].now.hum,
+						now_pres: res1.data.HeWeather6[0].now.pres,
+						daily_forecast: new Array(7)
+					};
+					requestSync("https://free-api.heweather.net/s6/weather/forecast?key="+HEWEATHER_KEY+"&location="+res1.city,res1.count,res1.city)
+					.then(res2=>{
+						var s;
+						var myDate;
+						for(var count=0;count<7;count++){
+							s = res2.data.HeWeather6[0].daily_forecast[count].date;
+							myDate = new Date(s);
+							thisapp.city_weather_list[res2.count].daily_forecast[count]={
+								date: String(s).substr(5,10),
+								week: (count==0)?"今天":thisapp.week[parseInt(myDate.getUTCDay())],
+								cond_code: res2.data.HeWeather6[0].daily_forecast[count].cond_code_d,
+								tmp_max: res2.data.HeWeather6[0].daily_forecast[count].tmp_min,
+								cond_txt: res2.data.HeWeather6[0].daily_forecast[count].cond_txt_d
+							}
+						}
+						thisapp.setData({
+							city_weather_list: thisapp.city_weather_list
+						});
+						console.log(thisapp.city_weather_list[res2.count]);
+					})
+				});
 			}
-		});
+		}
+		console.log("show finish");
 	},
 })

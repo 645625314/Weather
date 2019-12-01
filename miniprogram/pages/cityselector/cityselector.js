@@ -167,7 +167,9 @@ Page({
 					this.district_list[i] = res2.list[i]._id;
 				}
 				that.setData({
-					district_list: this.district_list
+					district_list: this.district_list.sort(function(a,b){
+						return a.localeCompare(b);
+					})
 				})
 			}
 		});
@@ -199,6 +201,7 @@ Page({
 				// console.log(res.data[0]._id);
 				var pageStacks = getCurrentPages();
 				var lastPage = pageStacks[pageStacks.length-2];
+				console.log(lastPage);
 				// lastPage.city_code_add = res.data[0]._id;
 				wx.cloud.callFunction({
 					name:"cityCheckAndAdd",
@@ -207,12 +210,13 @@ Page({
 					},
 					complete: function(res2) {
 						console.log(res2);
+						lastPage.city_list = res2.result.city_list;
+						wx.navigateBack({
+							delta: 1
+						});
+						wx.hideLoading();
 					}
 				});
-				wx.navigateBack({
-					delta: 1
-				});
-				wx.hideLoading();
 			}
 		});
 	},
@@ -223,7 +227,11 @@ Page({
 		// db = wx.cloud.database();
 		wx.hideLoading();
 		this.setData({
-			province_list: ["安徽","澳门","北京","重庆","福建", "甘肃", "广东", "广西", "贵州", "海南", "河北", "河南", "黑龙江", "湖北", "湖南", "吉林", "江苏", "江西", "辽宁", "内蒙古", "宁夏", "青海", "山东", "山西", "陕西", "上海", "四川", "台湾", "天津", "西藏", "香港", "新疆", "云南","浙江"],
+			province_list: ["安徽","澳门","北京","重庆","福建", "甘肃", 
+			"广东", "广西", "贵州", "海南", "河北", "河南", "黑龙江", 
+			"湖北", "湖南", "吉林", "江苏", "江西", "辽宁", "内蒙古", 
+			"宁夏", "青海", "山东", "山西", "陕西", "上海", "四川", 
+			"台湾", "天津", "西藏", "香港", "新疆", "云南","浙江"],
 			// .sort(
 			// 	function(a,b){
 			// 		return a.localeCompare(b)

@@ -35,7 +35,7 @@ exports.main = async (event, context) => {
 						//1 代表着数据已存在
 						STATE_CODE = 1;
 						return{
-							STATE_CODE
+							city_list: city_list
 						}
 					}
 				}
@@ -58,6 +58,6 @@ exports.main = async (event, context) => {
 	);
 	console.log(city_list);
 	return{
-		STATE_CODE
+		city_list: city_list
 	}
 }

@@ -1,0 +1,10 @@
+<!--miniprogram/pages/user/user.wxml-->
+<view class="Main">
+    <view class="HeadContainer">
+        <image class="ImageStyle" src="{{head_image_url}}" />
+    </view>
+    <view class="NameContainer">
+        <text class="NameStyle">{{nick_name}}</text>
+        <text wx:if="{{nick_name}}">你好</text>
+    </view>
+</view>

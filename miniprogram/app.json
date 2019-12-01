@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/cityselector/cityselector"
+    "pages/cityselector/cityselector",
+    "pages/user/user"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -22,10 +23,10 @@
         "selectedIconPath": "src/sWeather.png"
       },
       {
-        "pagePath": "pages/logs/logs",
-        "text": "首页",
-        "iconPath": "src/用户.png",
-        "selectedIconPath": "src/用户.png"
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "src/user.png",
+        "selectedIconPath": "src/user.png"
       }
     ]
   },

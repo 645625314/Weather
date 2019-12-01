@@ -47,7 +47,7 @@
 					<view class="city">{{admin_area}}-{{parent_city}}-{{location}}</view>
 					<view class="update_time">{{update_time}}</view>
 				</view>
-				<view wx:else style="height:auto;">
+				<view wx:else style="height:auto;margin-top:20rpx;">
 					<view class="city">正在获取位置...</view>
 					<view class="update_time">00:00:00</view>
 				</view>
@@ -84,13 +84,13 @@
 		</swiper-item>
 		<!-- 附属卡片，显示用户设置过的天气信息 -->
 		<block wx:for="{{city_weather_list}}" wx:key="*this">
-			<swiper-item class="swiper-item-card">
-				<view class="card">
+			<swiper-item class="swiper-item-card" mark:number="{{item.number}}" bindlongpress="onSwiperItemLongPress" style="initial;">
+				<view class="card"><!--  style="/*height:{{item.height}}rpx;" -->
 					<view style="margin-top:20rpx;">
-						<view class="city">{{item.admin_area}}-{{item.parent_city}}-{{item.location}}</view>
+						<view class="city" style="margin-top:{{item.margin_top}}rpx;">{{item.admin_area}}-{{item.parent_city}}-{{item.location}}</view>
 						<view class="update_time">{{item.update_time}}</view>
 					</view>
-					<view class="table">
+					<view class="table" style="margin-top:{{item.margin_top}}rpx;">
 						<view class="t1"> 
 							<image class="main_weather_icon" src="../../src/weather_icon/{{item.now_cond_code}}.png" mode="aspectFit" />
 						</view>
@@ -108,7 +108,7 @@
 							<text class="main_weather_text">湿度{{item.now_hum}}%  气压{{item.now_pres}}hPa</text>
 						</view>
 					</view>
-					<scroll-view class="weather_container_main" scroll-x enable-flex scroll-with-animation>
+					<scroll-view class="weather_container_main" scroll-x enable-flex scroll-with-animation  style="margin-top:{{item.margin_top}}rpx;">
 						<block wx:for="{{item.daily_forecast}}" wx:for-item="item2">
 							<view class="weather_container">
 								<view class="weather_cond" style="min-height:27rpx;margin-bottom:5rpx;">{{item2.week}}</view>
@@ -119,6 +119,18 @@
 							</view>
 						</block>
 					</scroll-view>
+					<!-- <block wx:if="{{item.margin_top == 30}}"> -->
+						<view class="DeleteAndCancelContainer" style="opacity:{{item.opacity}};">
+							<view class="DeleteAndCancelView">
+								<image src="../../src/delete.png" class="DeleteAndCancelIcon" bindtap="onCityDelete" mark:number="{{item.number}}"/>
+								<text class="DeleteAndCancelViewText">删 除</text>
+							</view>
+							<view class="DeleteAndCancelView">
+								<image src="../../src/cancel.png" class="DeleteAndCancelIcon" bindtap="onCityDeleteCancel"/>
+								<text class="DeleteAndCancelViewText">取 消</text>
+							</view>
+						</view>
+					<!-- </block> -->
 				</view>
 			</swiper-item>
 		</block>
